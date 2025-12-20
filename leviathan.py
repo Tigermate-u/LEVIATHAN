@@ -33,7 +33,7 @@ def logo():
    ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
    ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
 {W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-           {HG}  SYSTEM VERSION: 3.0  {RE}   {HB}  TEAM: LEVIATHAN  {RE}
+           {HG}  SYSTEM VERSION: 1.0  {RE}   {HB}  TEAM: GHOST-CW  {RE}
 {W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}
     """)
 
@@ -85,7 +85,7 @@ while True:
     elif choice == '3':
         print(f"\n{HB}  DEVELOPER INFO  {RE}")
         print(f"{W}Created by  : {G}LEVIATHAN")
-        print(f"{W}Telegram    : {C}@leviathan_official")
+        print(f"{W}Telegram    : {C}@Mr_Leviathan221")
         print(f"{W}Status      : {Y}STABLE RELEASE")
         input(f"\n{M}BACK TO MENU (ENTER)...")
     elif choice == '0' or choice == '00':
