@@ -3,7 +3,7 @@
 # ⚡ LEVIATHAN CORE
 ### Advanced Network Simulation & Stress Test Tool
 
-![Version](https://img.shields.io/badge/Version-1.0-blue?style=for-the-badge&logo=python)
+![Version](https://img.shields.io/badge/Version-2.0-blue?style=for-the-badge&logo=python)
 ![Maintenance](https://img.shields.io/badge/Maintained%3F-Yes-green?style=for-the-badge)
 ![Size](https://img.shields.io/badge/Size-Lightweight-orange?style=for-the-badge)
 
