@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-'''
+
 PROTECTED BY LEVIATHAN SECURITY
 UNAUTHORIZED DECOMPILATION WILL FAIL
-'''
+
 import base64 as b64, sys, time
 
 # junk_var_wczy1f = "0.9ztkjarsecq"
